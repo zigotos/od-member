@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: msClient
+  description: Micro Service Client
+  version: 0.0.1-SNAPSHOT
+servers:
+  - url: 'http://localhost:9090/'
+paths:
+  /users:
+    get:
+      description: Liste l'ensemble des utilisateurs
+      responses:
+        200:
+          description: "Liste des utilsateurs"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      description: Nouvel utilisateur
+      parameters:
+        - $ref: "#/components/schemas/User"
+      responses:
+        201:
+          description: "Correctement créé"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: "Erreur"
+  /users/{username}:
+    get:
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      description: Récupéré les informations d'un utilisateur
+      responses:
+        200:
+          description: "Trouvé"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        404:
+          description: "Non trouvé"
+        default:
+          description: "Erreur"
+    put:
+      description: Mettre a jour les information d'un utilisateur
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: "Correctement créé"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        default:
+          description: "Erreur"
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+        - password
+        - firstname
+        - lastname
+        - mail
+        - level
+        - roles
+      properties:
+        id:
+          description: Identifiant de l'utilisateur
+          type: integer
+          format: long
+        firstname:
+          description: Prénom de l'utilisateur
+          type: string
+        lastname:
+          description: Nom de famille de l'utilisateur
+          type: string
+        mail:
+          description: Email de l'utilisateur
+          type: string
+        username:
+          description: Nom d'utilisateur de l'utilisateur
+          type: string
+        password:
+          description: Mot de passe "encodé"
+          type: string
+        level:
+          description: Niveau d'expertise de l'utilisateur en danse (1-5)
+          type: integer
+          format: byte
+        roles:
+          description: Roles de l'utilisateur
+          type: array
+          items:
+            enum:
+              - MEMBRE
+              - SECRETAIRE
+              - ENSEIGNANT
+              - PRESIDENT
+        medicalStatus:
+          description: Statut médical du membre
+          $ref: "#/components/schemas/STATUS"
+        oweStatus:
+          description: L'état de la cotisation que doit l'utilisateur
+          $ref: "#/components/schemas/STATUS"
+    STATUS:
+      enum:
+        - EN ATTENTE
+        - RETARD
+        - VERIFICATION
+        - TRAITE

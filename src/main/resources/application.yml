@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: msMember
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:3306/banque
+    username: root
+    password: root
+server:
+  port: '8081'
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9090/annuaire
