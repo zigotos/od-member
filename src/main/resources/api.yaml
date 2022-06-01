@@ -4,9 +4,9 @@ info:
   description: Micro Service Client
   version: 0.0.1-SNAPSHOT
 servers:
-  - url: 'http://localhost:9090/users'
+  - url: 'http://localhost:9090/'
 paths:
-  /:
+  /users:
     get:
       description: Liste l'ensemble des utilisateurs
       responses:
@@ -31,7 +31,7 @@ paths:
                 $ref: "#/components/schemas/User"
         default:
           description: "Erreur"
-  /{username}:
+  /users/{username}:
     get:
       parameters:
         - name: username
