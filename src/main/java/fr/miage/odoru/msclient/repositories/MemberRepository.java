@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+//TODO: Passer sur mongodb
 public interface MemberRepository extends CrudRepository<Member, Long> {
-    List<Member> findByUsername(String username);
+    Member findByUsername(String username);
 }

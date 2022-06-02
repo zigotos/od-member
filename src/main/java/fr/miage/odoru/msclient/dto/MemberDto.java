@@ -11,6 +11,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDto {
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String mail;
@@ -19,5 +20,4 @@ public class MemberDto {
     private int level;
     private String medicalCertificateState;
     private String duesState;
-
 }
