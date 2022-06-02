@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -20,7 +21,7 @@ public class MemberController {
 
     @GetMapping("{username}")
     @ResponseBody
-    public Member getUser(@PathVariable String username){
+    public Optional<Member> getUser(@PathVariable String username){
         return memberService.getUser(username);
     }
 

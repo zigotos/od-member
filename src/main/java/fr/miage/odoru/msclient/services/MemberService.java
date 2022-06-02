@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -22,7 +23,7 @@ public class MemberService {
         return result;
     }
 
-    public Member getUser(String username){
+    public Optional<Member> getUser(String username){
         return memberRepository.findByUsername(username);
     }
 
