@@ -11,5 +11,5 @@ import java.util.List;
 public interface MemberRepository extends CrudRepository<Member, Long> {
     Member findByUsername(String username);
 
-    List<Member> findByLevelAfter(int level);
+    List<Member> findByLevelAfterAnAndRolesIs(int level, Member.Roles role);
 }
