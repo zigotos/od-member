@@ -10,4 +10,6 @@ import java.util.List;
 //TODO: Passer sur mongodb
 public interface MemberRepository extends CrudRepository<Member, Long> {
     Member findByUsername(String username);
+
+    List<Member> findByLevelAfter(int level);
 }

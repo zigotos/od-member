@@ -25,7 +25,11 @@ public class MemberService {
     public Member getUser(String username){
         return memberRepository.findByUsername(username);
     }
-    
+
+    public List<Member> getUserWithLevel(int level){
+        return memberRepository.findByLevelAfter(level);
+    }
+
     public void addOrUpdateUser(Member member){
         log.info(member + "Ajouter");
         memberRepository.save(member);
