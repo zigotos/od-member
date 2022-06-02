@@ -1,6 +1,6 @@
 package fr.miage.odoru.msclient.expo;
 
-import fr.miage.odoru.msclient.dto.MemberDto;
+import fr.miage.odoru.msclient.expo.dto.MemberDto;
 import fr.miage.odoru.msclient.entities.Member;
 import fr.miage.odoru.msclient.services.MemberService;
 import org.modelmapper.ModelMapper;

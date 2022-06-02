@@ -1,23 +1,27 @@
 package fr.miage.odoru.msclient.expo.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import fr.miage.odoru.msclient.entities.Member;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
+
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MemberDto {
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String mail;
-    private String adress;
-    private String roles;
-    private int level;
-    private String medicalCertificateState;
-    private String duesState;
+public class MemberDto implements Serializable {
+    private final Long id;
+    @NotNull
+    private final String firstName;
+    private final String lastName;
+    private final String mail;
+    @NotNull
+    private final String username;
+    private final String password;
+    private final String adress;
+    private final List<String> roles;
+    private final int level;
+    private final String medicalCertificateState;
+    private final String duesState;
 }
