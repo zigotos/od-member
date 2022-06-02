@@ -43,9 +43,9 @@ public class MemberController {
         memberService.addOrUpdateUser(modelMapper.map(member, Member.class));
     }
 
-    @GetMapping(path = "level/{lvl}")
+    @GetMapping
     @ResponseBody
-    public List<MemberDto> getUsersWithLevel(@PathVariable("lvl") int level) {
+    public List<MemberDto> getUsersWithLevel(@RequestParam("level") int level) {
         return memberService.getUserWithLevel(level)
                 .stream()
                 .map(user -> modelMapper.map(user, MemberDto.class))
