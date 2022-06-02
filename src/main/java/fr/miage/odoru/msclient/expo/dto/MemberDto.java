@@ -1,4 +1,4 @@
-package fr.miage.odoru.msclient.dto;
+package fr.miage.odoru.msclient.expo.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
