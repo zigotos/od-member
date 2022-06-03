@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface MemberRepository extends CrudRepository<Member, Long> {
     Optional<Member> findByUsername(String username);
 
-    List<Member> findByLevelAfterAnAndRolesIs(int level, Member.Roles role);
+    Optional<List<Member>> findByLevelIsGreaterThanEqualAndRolesIs(int level, String roles);
 }
