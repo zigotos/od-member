@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: msClient
+  title: msMember
   description: Micro Service Client
   version: 0.0.1-SNAPSHOT
 servers:
