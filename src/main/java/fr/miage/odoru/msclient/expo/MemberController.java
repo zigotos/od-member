@@ -27,7 +27,7 @@ public class MemberController {
 
     @GetMapping
     @ResponseBody
-    public List<MemberDto> getUsers() {
+    public List<MemberDto> getAllUsers() {
         return memberService.getListUsers()
                 .stream()
                 .map(user -> modelMapper.map(user, MemberDto.class))
@@ -44,7 +44,7 @@ public class MemberController {
         memberService.addOrUpdateUser(modelMapper.map(member, Member.class));
     }
 
-    @GetMapping
+    @GetMapping("search")
     @ResponseBody
     public List<MemberDto> getUsersWithLevel(@RequestParam("level") int level) {
         return memberService.getUserWithLevel(level)

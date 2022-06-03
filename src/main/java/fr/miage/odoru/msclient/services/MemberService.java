@@ -27,8 +27,8 @@ public class MemberService {
         return memberRepository.findByUsername(username);
     }
 
-    public List<Member> getUserWithLevel(int level){
-        return memberRepository.findByLevelAfterAnAndRolesIs(level, Member.Roles.MEMBRE);
+    public Optional<List<Member>> getUserWithLevel(int level){
+        return memberRepository.findByLevelIsGreaterThanEqualAndRolesIs(level, Member.Roles.MEMBRE.name());
     }
 
     public void addOrUpdateUser(Member member){
