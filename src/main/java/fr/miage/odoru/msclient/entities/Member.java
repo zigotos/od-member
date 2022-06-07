@@ -39,7 +39,7 @@ public class Member {
     private String password;
 
     @Column
-    private String adress;
+    private String address;
 
     @Column
     @ElementCollection(targetClass = String.class)

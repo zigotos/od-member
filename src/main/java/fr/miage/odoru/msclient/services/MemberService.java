@@ -32,7 +32,15 @@ public class MemberService {
     }
 
     public void addOrUpdateUser(Member member){
-        log.info(member + "Ajouter");
+        Optional<Member> memberModify;
+
+        memberModify = memberRepository.findByUsername(member.getUsername());
+        if (!memberModify.isEmpty()) {
+            member.setId(memberModify.get().getId());
+            log.info(member + "Modifier");
+        } else {
+            log.info(member + "Ajouter");
+        }
         memberRepository.save(member);
     }
 }

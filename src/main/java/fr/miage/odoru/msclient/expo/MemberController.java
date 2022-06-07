@@ -2,6 +2,7 @@ package fr.miage.odoru.msclient.expo;
 
 import fr.miage.odoru.msclient.expo.dto.MemberDto;
 import fr.miage.odoru.msclient.entities.Member;
+import fr.miage.odoru.msclient.expo.dto.MemberDtoGet;
 import fr.miage.odoru.msclient.services.MemberService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,16 @@ public class MemberController {
 
     @GetMapping("{username}")
     @ResponseBody
-    public Optional<Member> getUser(@PathVariable String username){
-        return memberService.getUser(username);
+    public Optional<MemberDtoGet> getUser(@PathVariable String username){
+        return memberService.getUser(username).map(user -> modelMapper.map(user, MemberDtoGet.class));
     }
 
     @GetMapping
     @ResponseBody
-    public List<MemberDto> getAllUsers() {
+    public List<MemberDtoGet> getAllUsers() {
         return memberService.getListUsers()
                 .stream()
-                .map(user -> modelMapper.map(user, MemberDto.class))
+                .map(user -> modelMapper.map(user, MemberDtoGet.class))
                 .collect(Collectors.toList());
     }
 
