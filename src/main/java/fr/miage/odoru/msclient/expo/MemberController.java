@@ -26,7 +26,7 @@ public class MemberController {
         return modelMapper.map(memberService.getUser(username), MemberDto.class);
     }
 
-    @RequestMapping(value="/members", method = RequestMethod.GET )
+    @GetMapping("")
     @ResponseBody
     public List<MemberDto> getAllUsers() {
         return memberService.getListUsers()
@@ -46,9 +46,9 @@ public class MemberController {
     }
 
     // TODO Patch GET de base et rectifier gestion level
-    @GetMapping("/")
+    @GetMapping("/level/{level}")
     @ResponseBody
-    public List<MemberDto> getUsersWithLevel(@RequestParam("level") int level) {
+    public List<MemberDto> getUsersWithLevel(@PathVariable("level") int level) {
         return memberService.getUserWithLevel(level)
                 .stream()
                 .map(user -> modelMapper.map(user, MemberDto.class))
