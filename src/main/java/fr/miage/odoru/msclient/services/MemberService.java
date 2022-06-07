@@ -1,6 +1,7 @@
 package fr.miage.odoru.msclient.services;
 
 import fr.miage.odoru.msclient.entities.Member;
+import fr.miage.odoru.msclient.expo.dto.MemberDto;
 import fr.miage.odoru.msclient.repositories.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,15 @@ public class MemberService {
     public List<Member> getListUsers(){
         List<Member> result = new ArrayList<>();
         memberRepository.findAll().iterator().forEachRemaining(result::add);
-        return result;
+        return securityCheck(result);
     }
 
-    public Optional<Member> getUser(String username) throws ResponseStatusException {
+    public Member getUser(String username) throws ResponseStatusException {
         Optional<Member> member = memberRepository.findByUsername(username);
         if (member.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return member;
+        return securityCheck(member.get());
     }
 
     public List<Member> getUserWithLevel(int level){
@@ -62,5 +63,15 @@ public class MemberService {
         member.setId(memberModify.get().getId());
         memberRepository.save(member);
         log.info(member + "Modifier");
+    }
+
+    private List<Member> securityCheck(List<Member> members) {
+        members.forEach(member -> securityCheck(member));
+        return members;
+    }
+
+    private Member securityCheck(Member member) {
+        member.setPassword(null);
+        return member;
     }
 }

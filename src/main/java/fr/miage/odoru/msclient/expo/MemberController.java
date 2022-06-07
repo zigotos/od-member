@@ -22,9 +22,8 @@ public class MemberController {
 
     @GetMapping("{username}")
     @ResponseBody
-    public Optional<MemberDto> getUser(@PathVariable String username) throws ResponseStatusException {
-        Optional<MemberDto> member = memberService.getUser(username).map(user -> modelMapper.map(user, MemberDto.class));
-        return member;
+    public MemberDto getUser(@PathVariable String username) throws ResponseStatusException {
+        return modelMapper.map(memberService.getUser(username), MemberDto.class);
     }
 
     @RequestMapping(value="/members", method = RequestMethod.GET )
@@ -46,6 +45,7 @@ public class MemberController {
         memberService.updateUser(username, modelMapper.map(member, Member.class));
     }
 
+    // TODO Patch GET de base et rectifier gestion level
     @GetMapping("/")
     @ResponseBody
     public List<MemberDto> getUsersWithLevel(@RequestParam("level") int level) {
