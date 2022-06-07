@@ -4,7 +4,9 @@ import fr.miage.odoru.msclient.entities.Member;
 import fr.miage.odoru.msclient.repositories.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,24 +25,42 @@ public class MemberService {
         return result;
     }
 
-    public Optional<Member> getUser(String username){
-        return memberRepository.findByUsername(username);
+    public Optional<Member> getUser(String username) throws ResponseStatusException {
+        Optional<Member> member = memberRepository.findByUsername(username);
+        if (member.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return member;
     }
 
-    public Optional<List<Member>> getUserWithLevel(int level){
-        return memberRepository.findByLevelIsGreaterThanEqualAndRolesIs(level, Member.Roles.MEMBRE.name());
+    public List<Member> getUserWithLevel(int level){
+        List<Member> result = new ArrayList<>();
+        memberRepository.findAllByLevel(level).iterator().forEachRemaining(result::add);
+        return result;
     }
 
-    public void addOrUpdateUser(Member member){
+    public void addUser(Member member){
         Optional<Member> memberModify;
-
         memberModify = memberRepository.findByUsername(member.getUsername());
         if (!memberModify.isEmpty()) {
-            member.setId(memberModify.get().getId());
-            log.info(member + "Modifier");
-        } else {
-            log.info(member + "Ajouter");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
         memberRepository.save(member);
+        log.info(member + "Ajouter");
+    }
+
+    public void updateUser(String username, Member member) throws ResponseStatusException {
+        Optional<Member> memberModify;
+        memberModify = memberRepository.findByUsername(username);
+        if (memberModify.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        // TODO : CAS NON TRAITE - MAINTIENT DE SON PROPRE PSEUDO (ex : Modifie son pseudo DamLinux en DamLinux)
+        if (username != member.getUsername() && !memberRepository.findByUsername(member.getUsername()).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+        member.setId(memberModify.get().getId());
+        memberRepository.save(member);
+        log.info(member + "Modifier");
     }
 }
