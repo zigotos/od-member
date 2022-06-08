@@ -1,5 +1,6 @@
 package fr.miage.odoru.msclient.expo;
 
+import fr.miage.odoru.msclient.clients.dto.CourseDto;
 import fr.miage.odoru.msclient.expo.dto.MemberDto;
 import fr.miage.odoru.msclient.entities.Member;
 import fr.miage.odoru.msclient.services.MemberService;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -53,5 +53,10 @@ public class MemberController {
                 .stream()
                 .map(user -> modelMapper.map(user, MemberDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{username}/courses")
+    public List<CourseDto> getCourses(@PathVariable("username") String username) {
+        return memberService.getCourses(username);
     }
 }

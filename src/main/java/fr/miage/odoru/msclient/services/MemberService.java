@@ -1,7 +1,7 @@
 package fr.miage.odoru.msclient.services;
-
+import fr.miage.odoru.msclient.clients.InvolvementClient;
 import fr.miage.odoru.msclient.entities.Member;
-import fr.miage.odoru.msclient.expo.dto.MemberDto;
+import fr.miage.odoru.msclient.clients.dto.CourseDto;
 import fr.miage.odoru.msclient.repositories.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,9 @@ public class MemberService {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    InvolvementClient involvementClient;
 
     public List<Member> getListUsers(){
         List<Member> result = new ArrayList<>();
@@ -63,6 +66,14 @@ public class MemberService {
         member.setId(memberModify.get().getId());
         memberRepository.save(member);
         log.info(member + "Modifier");
+    }
+
+    public List<CourseDto> getCourses(String username) throws ResponseStatusException {
+        Optional<Member> member = memberRepository.findByUsername(username);
+        if (member.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return involvementClient.getCourses(member.get().getId());
     }
 
     private List<Member> securityCheck(List<Member> members) {
