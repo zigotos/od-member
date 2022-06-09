@@ -37,7 +37,7 @@ public class MemberService {
         return securityCheck(member.get());
     }
 
-    public List<Member> getUserWithLevel(int level){
+    public List<Member> getUsersWithLevel(int level){
         List<Member> result = new ArrayList<>();
         memberRepository.findAllByLevel(level).iterator().forEachRemaining(result::add);
         return result;
@@ -74,6 +74,14 @@ public class MemberService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return involvementClient.getCourses(member.get().getId());
+    }
+
+    public List<CourseDto> getCompetitions(String username) throws ResponseStatusException {
+        Optional<Member> member = memberRepository.findByUsername(username);
+        if (member.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return involvementClient.getCompetitions(member.get().getId());
     }
 
     private List<Member> securityCheck(List<Member> members) {

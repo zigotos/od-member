@@ -49,7 +49,7 @@ public class MemberController {
     @GetMapping("/level/{level}")
     @ResponseBody
     public List<MemberDto> getUsersWithLevel(@PathVariable("level") int level) {
-        return memberService.getUserWithLevel(level)
+        return memberService.getUsersWithLevel(level)
                 .stream()
                 .map(user -> modelMapper.map(user, MemberDto.class))
                 .collect(Collectors.toList());
@@ -58,5 +58,10 @@ public class MemberController {
     @GetMapping("/{username}/courses")
     public List<CourseDto> getCourses(@PathVariable("username") String username) {
         return memberService.getCourses(username);
+    }
+
+    @GetMapping("/{username}/competitions")
+    public List<CourseDto> getCompetitions(@PathVariable("username") String username) {
+        return memberService.getCompetitions(username);
     }
 }

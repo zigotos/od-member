@@ -17,4 +17,5 @@ public class CourseDto implements Serializable {
     private String locality;
     private boolean presence;
     private double result;
+    private String type;
 }
