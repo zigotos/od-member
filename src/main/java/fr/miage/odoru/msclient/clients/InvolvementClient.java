@@ -10,5 +10,5 @@ import java.util.List;
 @FeignClient("odInvolvement")
 public interface InvolvementClient {
     @GetMapping(value="involvements/{idMember}/courses", produces = "application/json")
-    public List<CourseDto> getCourses(@PathVariable("idMember") Long idMember);
+    public List<CourseDto> getCourses(@PathVariable("idMember") String idMember);
 }
