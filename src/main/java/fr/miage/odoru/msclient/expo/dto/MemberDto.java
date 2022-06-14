@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDto implements Serializable {
-    private Long id;
+    private String id;
     private String firstName;
     private String lastName;
     private String mail;

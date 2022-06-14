@@ -1,8 +1,12 @@
 package fr.miage.odoru.msclient.entities;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -11,47 +15,46 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Document(collection = "member")
 public class Member {
     public enum Roles {MEMBRE, SECRETAIRE, ENSEIGNANT, PRESIDENT}
     public enum States {EN_ATTENTE, RETARD, VERIFICATION, TRAITE}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    private Long id;
+    @MongoId
+    @NotNull
+    @Field
+    private String id;
 
-    @Column
+    @Field
     @NotNull
     private String firstName;
 
-    @Column
+    @Field
     private String lastName;
 
-    @Column
+    @Field
     private String mail;
 
     @NotNull
-    @Column(unique = true)
+    @Field
     private String username;
 
-    @Column
+    @Field
     private String password;
 
-    @Column
+    @Field
     private String address;
 
-    @Column
-    @ElementCollection(targetClass = String.class)
+    @Field
     private List<Roles> roles;
 
-    @Column
+    @Field
     private int level;
 
-    @Column
+    @Field
     private States medicalCertificateState;
 
-    @Column
+    @Field
     private States duesState;
 
 }
