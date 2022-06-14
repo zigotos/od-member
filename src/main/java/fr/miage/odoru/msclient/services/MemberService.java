@@ -68,7 +68,6 @@ public class MemberService {
         if (memberModify.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        // TODO : CAS NON TRAITE - MAINTIENT DE SON PROPRE PSEUDO (ex : Modifie son pseudo DamLinux en DamLinux)
         if (username != member.getUsername() && !memberRepository.findByUsername(member.getUsername()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
