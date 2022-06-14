@@ -13,7 +13,7 @@ public class CourseDto implements Serializable {
     private String title;
     private int level;
     private Slot slot;
-    private Long teacher;
+    private String teacher;
     private String locality;
     private boolean presence;
     private double result;

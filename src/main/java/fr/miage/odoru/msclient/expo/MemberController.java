@@ -26,6 +26,12 @@ public class MemberController {
         return modelMapper.map(memberService.getUser(username), MemberDto.class);
     }
 
+    @GetMapping("id/{idMember}")
+    @ResponseBody
+    public MemberDto getUserWithId(@PathVariable String idMember) throws ResponseStatusException {
+        return modelMapper.map(memberService.getUserWithId(idMember), MemberDto.class);
+    }
+
     @GetMapping("")
     @ResponseBody
     public List<MemberDto> getAllUsers() {

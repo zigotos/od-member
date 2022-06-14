@@ -4,6 +4,7 @@ import fr.miage.odoru.msclient.entities.Member;
 import fr.miage.odoru.msclient.clients.dto.CourseDto;
 import fr.miage.odoru.msclient.repositories.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,14 @@ public class MemberService {
 
     public Member getUser(String username) throws ResponseStatusException {
         Optional<Member> member = memberRepository.findByUsername(username);
+        if (member.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return securityCheck(member.get());
+    }
+
+    public Member getUserWithId(String idMember) throws ResponseStatusException {
+        Optional<Member> member = memberRepository.findById(new ObjectId(idMember));
         if (member.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -73,7 +82,7 @@ public class MemberService {
         if (member.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return involvementClient.getCourses(member.get().getId());
+        return involvementClient.getCourses(member.get().getId().toString());
     }
 
     public List<CourseDto> getCompetitions(String username) throws ResponseStatusException {
@@ -81,11 +90,11 @@ public class MemberService {
         if (member.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return involvementClient.getCompetitions(member.get().getId());
+        return involvementClient.getCompetitions(member.get().getId().toString());
     }
 
     private List<Member> securityCheck(List<Member> members) {
-        members.forEach(member -> securityCheck(member));
+        members.forEach(this::securityCheck);
         return members;
     }
 

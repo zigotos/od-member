@@ -1,6 +1,7 @@
 package fr.miage.odoru.msclient.entities;
 
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -20,10 +21,10 @@ public class Member {
     public enum Roles {MEMBRE, SECRETAIRE, ENSEIGNANT, PRESIDENT}
     public enum States {EN_ATTENTE, RETARD, VERIFICATION, TRAITE}
 
-    @MongoId
+    @MongoId(value = FieldType.OBJECT_ID)
     @NotNull
     @Field
-    private String id;
+    private ObjectId id;
 
     @Field
     @NotNull

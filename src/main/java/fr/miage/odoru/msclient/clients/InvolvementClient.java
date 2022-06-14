@@ -13,5 +13,5 @@ public interface InvolvementClient {
     public List<CourseDto> getCourses(@PathVariable("idMember") String idMember);
 
     @GetMapping(value="involvements/{idMember}/competitions", produces = "application/json")
-    public List<CourseDto> getCompetitions(@PathVariable("idMember") Long idMember);
+    public List<CourseDto> getCompetitions(@PathVariable("idMember") String idMember);
 }
