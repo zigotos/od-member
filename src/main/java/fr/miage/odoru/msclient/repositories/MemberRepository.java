@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface MemberRepository extends MongoRepository<Member, ObjectId> {
     Optional<Member> findByUsername(String username);
 
-    List<Member> findAllByLevel(int level);
+    List<Member> findByLevelGreaterThanEqualAndRolesContaining(int level, Member.Roles roles);
 }

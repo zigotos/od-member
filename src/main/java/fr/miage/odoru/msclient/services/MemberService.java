@@ -46,9 +46,9 @@ public class MemberService {
         return securityCheck(member.get());
     }
 
-    public List<Member> getUsersWithLevel(int level){
+    public List<Member> getUsersWithLevelGreater(int level){
         List<Member> result = new ArrayList<>();
-        memberRepository.findAllByLevel(level).iterator().forEachRemaining(result::add);
+        memberRepository.findByLevelGreaterThanEqualAndRolesContaining(level, Member.Roles.MEMBRE).iterator().forEachRemaining(result::add);
         return result;
     }
 

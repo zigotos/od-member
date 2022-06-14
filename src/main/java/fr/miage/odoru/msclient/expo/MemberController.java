@@ -52,10 +52,10 @@ public class MemberController {
     }
 
     // TODO Patch GET de base et rectifier gestion level
-    @GetMapping("/level/{level}")
+    @GetMapping("/levelGreater/{level}")
     @ResponseBody
-    public List<MemberDto> getUsersWithLevel(@PathVariable("level") int level) {
-        return memberService.getUsersWithLevel(level)
+    public List<MemberDto> getUsersWithLevelGreater(@PathVariable("level") int level) {
+        return memberService.getUsersWithLevelGreater(level)
                 .stream()
                 .map(user -> modelMapper.map(user, MemberDto.class))
                 .collect(Collectors.toList());
