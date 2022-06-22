@@ -19,6 +19,7 @@ import java.util.List;
 @Document(collection = "member")
 public class Member {
     public enum Roles {MEMBRE, SECRETAIRE, ENSEIGNANT, PRESIDENT}
+
     public enum States {EN_ATTENTE, RETARD, VERIFICATION, TRAITE}
 
     @MongoId(value = FieldType.OBJECT_ID)
