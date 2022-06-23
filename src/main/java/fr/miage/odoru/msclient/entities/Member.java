@@ -1,5 +1,6 @@
 package fr.miage.odoru.msclient.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -51,7 +52,7 @@ public class Member {
     private List<Roles> roles;
 
     @Field
-    private int level;
+    private Integer level;
 
     @Field
     private States medicalCertificateState;

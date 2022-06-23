@@ -64,14 +64,18 @@ public class MemberService {
 
     public void updateUser(String username, Member member) throws ResponseStatusException {
         Optional<Member> memberModify;
+        Member memberInDB;
         memberModify = memberRepository.findByUsername(username);
+
         if (memberModify.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         if (username != member.getUsername() && !memberRepository.findByUsername(member.getUsername()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
-        member.setId(memberModify.get().getId());
+        memberInDB = memberModify.get();
+        member.setId(memberInDB.getId());
+        member = putCheck(member, memberInDB);
         memberRepository.save(member);
         log.info(member + "Modifier");
     }
@@ -115,6 +119,90 @@ public class MemberService {
 
     private Member securityCheck(Member member) {
         member.setPassword(null);
+        return member;
+    }
+
+    private Member putCheck(Member member, Member memberInDB) {
+        member = putRoleCheck(member, memberInDB);
+        member = putAddressCheck(member, memberInDB);
+        member = putUsernameCheck(member, memberInDB);
+        member = putDuesStateCheck(member, memberInDB);
+        member = putLevelCheck(member, memberInDB);
+        member = putFirstNameCheck(member, memberInDB);
+        member = putLastNameCheck(member, memberInDB);
+        member = putMailCheck(member, memberInDB);
+        member = putMedicalCertificatesStateCheck(member, memberInDB);
+        member = putPasswordCheck(member, memberInDB);
+        return member;
+    }
+
+    private Member putRoleCheck(Member member, Member memberInDB) {
+        if (member.getRoles() == null) {
+            member.setRoles(memberInDB.getRoles());
+        }
+        return member;
+    }
+
+    private Member putAddressCheck(Member member, Member memberInDB) {
+        if (member.getAddress() == null) {
+            member.setAddress(memberInDB.getAddress());
+        }
+        return member;
+    }
+
+    private Member putUsernameCheck(Member member, Member memberInDB) {
+        if (member.getUsername() == null) {
+            member.setUsername(memberInDB.getUsername());
+        }
+        return member;
+    }
+
+    private Member putDuesStateCheck(Member member, Member memberInDB) {
+        if (member.getDuesState() == null) {
+            member.setDuesState(memberInDB.getDuesState());
+        }
+        return member;
+    }
+
+    private Member putFirstNameCheck(Member member, Member memberInDB) {
+        if (member.getFirstName() == null) {
+            member.setFirstName(memberInDB.getFirstName());
+        }
+        return member;
+    }
+
+    private Member putLastNameCheck(Member member, Member memberInDB) {
+        if (member.getLastName() == null) {
+            member.setLastName(memberInDB.getLastName());
+        }
+        return member;
+    }
+
+    private Member putLevelCheck(Member member, Member memberInDB) {
+        if (member.getLevel() == null) {
+            member.setLevel(memberInDB.getLevel());
+        }
+        return member;
+    }
+
+    private Member putMailCheck(Member member, Member memberInDB) {
+        if (member.getMail() == null) {
+            member.setMail(memberInDB.getMail());
+        }
+        return member;
+    }
+
+    private Member putMedicalCertificatesStateCheck(Member member, Member memberInDB) {
+        if (member.getMedicalCertificateState() == null) {
+            member.setMedicalCertificateState(memberInDB.getMedicalCertificateState());
+        }
+        return member;
+    }
+
+    private Member putPasswordCheck(Member member, Member memberInDB) {
+        if (member.getPassword() == null) {
+            member.setPassword(memberInDB.getPassword());
+        }
         return member;
     }
 }

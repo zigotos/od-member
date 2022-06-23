@@ -29,7 +29,7 @@ public class MemberDto implements Serializable {
     @Schema(description = "Roles de l'utilisateur", allowableValues = {"MEMBRE", "SECRETAIRE", "ENSEIGNANT", "PRESIDENT"})
     private List<String> roles;
     @Schema(description = "Niveau du membre")
-    private int level = -1;
+    private Integer level = -1;
     @Schema(description = "Etat du certificat médical", allowableValues = {"EN_ATTENTE", "RETARD", "VERIFICATION", "TRAITE"})
     private String medicalCertificateState;
     @Schema(description = "Etat du payement", allowableValues = {"EN_ATTENTE", "RETARD", "VERIFICATION", "TRAITE"})
