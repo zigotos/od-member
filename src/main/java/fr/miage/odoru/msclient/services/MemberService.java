@@ -92,6 +92,22 @@ public class MemberService {
         return involvementClient.getCompetitions(member.get().getId().toString());
     }
 
+    public List<CourseDto> getCoursesByPeriod(String username, String dateStart, String dateEnd) throws ResponseStatusException {
+        Optional<Member> member = memberRepository.findByUsername(username);
+        if (member.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return involvementClient.getCoursesByPeriod(member.get().getId().toString(), dateStart, dateEnd);
+    }
+
+    public List<CourseDto> getCompetitionsByPeriod(String username, String dateStart, String dateEnd) throws ResponseStatusException {
+        Optional<Member> member = memberRepository.findByUsername(username);
+        if (member.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return involvementClient.getCompetitionsByPeriod(member.get().getId().toString(), dateStart, dateEnd);
+    }
+
     private List<Member> securityCheck(List<Member> members) {
         members.forEach(this::securityCheck);
         return members;

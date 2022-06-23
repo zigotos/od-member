@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -100,5 +99,25 @@ public class MemberController {
     @GetMapping("/{username}/competitions")
     public List<CourseDto> getCompetitions(@PathVariable("username") String username) {
         return memberService.getCompetitions(username);
+    }
+
+    @Operation(summary = "Récuperer les cours d'un membre sur une période et avec son nom d'utilisateur",
+            responses = {@ApiResponse(description = "OK", responseCode = "200"),
+                    @ApiResponse(description = "Membre inconnu", responseCode = "404", content = @Content())})
+    @GetMapping("{username}/courses/startPeriod/{dateStart}/endPeriod/{dateEnd}")
+    @ResponseBody
+    public List<CourseDto> getCoursesByPeriod(@PathVariable("username") String username, @PathVariable("dateStart") String dateStart,
+                                              @PathVariable("dateEnd") String dateEnd) throws ResponseStatusException {
+        return memberService.getCoursesByPeriod(username, dateStart, dateEnd);
+    }
+
+    @Operation(summary = "Récuperer les compétitions d'un membre sur une période avec son nom d'utilisateur",
+            responses = {@ApiResponse(description = "OK", responseCode = "200"),
+                    @ApiResponse(description = "Membre inconnu", responseCode = "404", content = @Content())})
+    @GetMapping("{username}/competitions/startPeriod/{dateStart}/endPeriod/{dateEnd}")
+    @ResponseBody
+    public List<CourseDto> getCompetitionsByPeriod(@PathVariable("username") String username, @PathVariable("dateStart") String dateStart,
+                                                   @PathVariable("dateEnd") String dateEnd) throws ResponseStatusException {
+        return memberService.getCompetitionsByPeriod(username, dateStart, dateEnd);
     }
 }
