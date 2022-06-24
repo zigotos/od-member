@@ -120,6 +120,7 @@ public class MemberService {
 
         member = memberRepository.findByUsername(role.getUsername());
         if (member.isEmpty()) {
+            log.info("Utilisateur inexistant");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         rolesMember = role.getRoles();
@@ -131,6 +132,7 @@ public class MemberService {
             }
         }
         if (!presence) {
+            log.info("L'utilisateur ne possède pas le bon role pour effectuer cette actions, roles autorisés : " + rolesMember.toString());
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
