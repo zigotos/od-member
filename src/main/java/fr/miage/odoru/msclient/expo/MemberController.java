@@ -3,6 +3,7 @@ package fr.miage.odoru.msclient.expo;
 import fr.miage.odoru.msclient.clients.dto.CourseDto;
 import fr.miage.odoru.msclient.expo.dto.MemberDto;
 import fr.miage.odoru.msclient.entities.Member;
+import fr.miage.odoru.msclient.expo.dto.RoleDto;
 import fr.miage.odoru.msclient.services.MemberService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -119,5 +120,10 @@ public class MemberController {
     public List<CourseDto> getCompetitionsByPeriod(@PathVariable("username") String username, @PathVariable("dateStart") String dateStart,
                                                    @PathVariable("dateEnd") String dateEnd) throws ResponseStatusException {
         return memberService.getCompetitionsByPeriod(username, dateStart, dateEnd);
+    }
+
+    @PostMapping("securityCheck")
+    public void postSecurityCheck(@RequestBody RoleDto role) {
+
     }
 }

@@ -2,6 +2,7 @@ package fr.miage.odoru.msclient.services;
 import fr.miage.odoru.msclient.clients.InvolvementClient;
 import fr.miage.odoru.msclient.entities.Member;
 import fr.miage.odoru.msclient.clients.dto.CourseDto;
+import fr.miage.odoru.msclient.expo.dto.RoleDto;
 import fr.miage.odoru.msclient.repositories.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -110,6 +111,15 @@ public class MemberService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return involvementClient.getCompetitionsByPeriod(member.get().getId().toString(), dateStart, dateEnd);
+    }
+
+    public void securityCheckRole(RoleDto role) {
+        Optional<Member> member;
+
+        member = memberRepository.findByUsername(role.getUsername());
+        if (member.isEmpty()) {
+            throw new ResponseStatusException()
+        }
     }
 
     private List<Member> securityCheck(List<Member> members) {
