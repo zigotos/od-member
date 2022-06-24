@@ -123,7 +123,7 @@ public class MemberController {
     }
 
     @PostMapping("securityCheck")
-    public void postSecurityCheck(@RequestBody RoleDto role) {
-
+    public void postSecurityCheck(@RequestBody RoleDto role) throws ResponseStatusException {
+        memberService.securityCheckRole(role);
     }
 }

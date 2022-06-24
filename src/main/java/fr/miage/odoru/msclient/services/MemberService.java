@@ -113,18 +113,25 @@ public class MemberService {
         return involvementClient.getCompetitionsByPeriod(member.get().getId().toString(), dateStart, dateEnd);
     }
 
-    public void securityCheckRole(RoleDto role) {
+    public void securityCheckRole(RoleDto role) throws ResponseStatusException {
         Optional<Member> member;
-        boolean presence;
+        List<RoleDto.Roles> rolesMember;
+        boolean presence = false;
 
         member = memberRepository.findByUsername(role.getUsername());
         if (member.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        for (RoleDto.Roles aRole : role.getRoles()) {
-            if (member.get().getRoles().contains(aRole)) {
-                
+        rolesMember = role.getRoles();
+        for (int i = 0 ; i < rolesMember.size() && !presence ; i++) {
+            for (Member.Roles aRole : member.get().getRoles()) {
+                if (aRole.equals(rolesMember.get(i).toString())) {
+                    presence = true;
+                }
             }
+        }
+        if (!presence) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
 
