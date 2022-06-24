@@ -126,7 +126,7 @@ public class MemberService {
         rolesMember = role.getRoles();
         for (int i = 0 ; i < rolesMember.size() && !presence ; i++) {
             for (Member.Roles aRole : member.get().getRoles()) {
-                if (aRole.equals(rolesMember.get(i).toString())) {
+                if (aRole.toString().equals(rolesMember.get(i).toString())) {
                     presence = true;
                 }
             }
