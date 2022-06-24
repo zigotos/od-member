@@ -115,10 +115,16 @@ public class MemberService {
 
     public void securityCheckRole(RoleDto role) {
         Optional<Member> member;
+        boolean presence;
 
         member = memberRepository.findByUsername(role.getUsername());
         if (member.isEmpty()) {
-            throw new ResponseStatusException()
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        for (RoleDto.Roles aRole : role.getRoles()) {
+            if (member.get().getRoles().contains(aRole)) {
+                
+            }
         }
     }
 

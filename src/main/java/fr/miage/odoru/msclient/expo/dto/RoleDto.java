@@ -15,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoleDto implements Serializable {
+    public enum Roles {MEMBRE, SECRETAIRE, ENSEIGNANT, PRESIDENT}
+
     private String username;
-    private List<Member.Roles> roles;
+    private List<Roles> roles;
 }
